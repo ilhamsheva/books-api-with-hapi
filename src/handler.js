@@ -1,7 +1,7 @@
-import { nanoid } from "nanoid"
-import { books } from "./books.js";
+const { nanoid } = require('nanoid');
+const books = require('./books');
 
-export const addBookHandler = async (req, h) => {
+const addBookHandler = async (req, h) => {
     const id = nanoid(16);
 
     const insertedAt = new Date().toISOString();
@@ -57,7 +57,7 @@ export const addBookHandler = async (req, h) => {
     }).code(500);
 }
 
-export const getAllBooksHandler = async (req, h) => {
+const getAllBooksHandler = async (req, h) => {
     const { name, reading, finished } = req.query;
     
     let filteredBooks = books;
@@ -92,7 +92,7 @@ export const getAllBooksHandler = async (req, h) => {
     }).code(200);
 };
 
-export const getDetailBookHandler = async (req, h) => {
+const getDetailBookHandler = async (req, h) => {
     const { bookId } = req.params;
 
 
@@ -114,7 +114,7 @@ export const getDetailBookHandler = async (req, h) => {
     }).code(404);
 };
 
-export const updateBookHandler = async (req, h) => {
+const updateBookHandler = async (req, h) => {
     const { bookId } = req.params;
 
     const { name, year, author, summary, publisher, pageCount, readPage, reading } = req.payload;
@@ -161,7 +161,7 @@ export const updateBookHandler = async (req, h) => {
     }).code(200);
 }
 
-export const deleteBookHandler = async (req, h) => {
+const deleteBookHandler = async (req, h) => {
     const { bookId } = req.params;
 
     const index = books.findIndex((book) => book.id === bookId);
@@ -180,3 +180,11 @@ export const deleteBookHandler = async (req, h) => {
         message: 'Buku berhasil dihapus',
     }).code(200);
 }
+
+module.exports = {
+    addBookHandler,
+    getAllBooksHandler,
+    getDetailBookHandler,
+    updateBookHandler,
+    deleteBookHandler,
+};
